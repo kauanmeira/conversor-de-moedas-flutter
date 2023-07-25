@@ -4,4 +4,5 @@ Aplicação consiste em um aplicativo mobile de conversão de moedas, podendo se
 
 A aplicação consome da api https://hgbrasil.com/ as cotações das moedas em tempo real.
 
-![image](https://github.com/kauanmeira/conversor-de-moedas-flutter/assets/114404211/9dd2075a-6e6c-42cf-badb-16961be3fdee)
+![image](https://github.com/kauanmeira/conversor-de-moedas-flutter/assets/114404211/2dc978f9-c3e8-46f8-a78b-b8d1dd389005)
+
