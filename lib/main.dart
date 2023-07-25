@@ -8,6 +8,7 @@ const request = "https://api.hgbrasil.com/finance?format=json&key=bb0077a3";
 void main() async {
   runApp(MaterialApp(
     home: Home(),
+    debugShowCheckedModeBanner: false,
     theme: ThemeData(
         hintColor: Colors.amber,
         primaryColor: Colors.white,
