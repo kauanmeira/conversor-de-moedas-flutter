@@ -2,7 +2,10 @@ import 'package:conversor_moeda/main.dart';
 import 'package:flutter/material.dart';
 
 class Home extends StatelessWidget {
-  const Home({super.key});
+  Home({super.key});
+
+  double dolar = 0.0;
+  double euro = 0.0;
 
   @override
   Widget build(BuildContext context) {
@@ -10,8 +13,23 @@ class Home extends StatelessWidget {
     final euroController = TextEditingController();
     final dolarController = TextEditingController();
 
-    double dolar;
-    double euro;
+    void _realChanged(String text) {
+      double real = double.parse(text);
+      dolarController.text = (real / dolar).toStringAsFixed(2);
+      euroController.text = (real / euro).toStringAsFixed(2);
+    }
+
+    void _dolarChanged(String text) {
+      double dolar = double.parse(text);
+      euroController.text = (dolar * this.dolar / euro).toStringAsFixed(2);
+      realController.text = (dolar * this.dolar).toStringAsFixed(2);
+    }
+
+    void _euroChanged(String text) {
+      double euro = double.parse(text);
+      realController.text = (euro * this.euro).toStringAsFixed(2);
+      dolarController.text = (euro * this.euro / dolar).toStringAsFixed(2);
+    }
 
     return Scaffold(
       backgroundColor: Colors.black,
@@ -47,11 +65,14 @@ class Home extends StatelessWidget {
                       children: [
                         const Icon(Icons.monetization_on,
                             size: 150.0, color: Colors.amber),
-                        buildTextField('Reais', 'R\$', realController),
+                        buildTextField(
+                            'Reais', 'R\$', realController, _realChanged),
                         Divider(),
-                        buildTextField('Dólares', 'US\$', dolarController),
+                        buildTextField(
+                            'Dólares', 'US\$', dolarController, _dolarChanged),
                         Divider(),
-                        buildTextField('Euros', '€', euroController)
+                        buildTextField(
+                            'Euros', '€', euroController, _euroChanged)
                       ]),
                 );
               }
@@ -62,15 +83,17 @@ class Home extends StatelessWidget {
   }
 }
 
-Widget buildTextField(
-    String label, String prefix, TextEditingController controller) {
+Widget buildTextField(String label, String prefix, TextEditingController c,
+    void Function(String)? f) {
   return TextField(
-    controller: controller,
+    controller: c,
     decoration: InputDecoration(
         labelText: label,
         labelStyle: TextStyle(color: Colors.amber),
         border: OutlineInputBorder(),
         prefixText: prefix),
     style: TextStyle(color: Colors.amber, fontSize: 25.0),
+    onChanged: f,
+    keyboardType: TextInputType.number,
   );
 }
